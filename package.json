@@ -1,0 +1,21 @@
+{
+  "name": "factorio-achievements-reset",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npx vite build --emptyOutDir",
+    "update": "npx npm-check-updates -u && npm install"
+  },
+  "dependencies": {
+    "jszip": "^3.10.2",
+    "pako": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/pako": "^3.0.0",
+    "puppeteer-core": "^25.18.1",
+    "subset-font": "^2.9.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}

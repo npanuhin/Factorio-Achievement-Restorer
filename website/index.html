@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factorio Achievement Restorer</title>
+  <link rel="preload" href="./assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+
+  <div class="container">
+    <div class="top-bar">
+      <div class="brand"></div>
+
+      <div class="custom-select-wrap" id="langSelectWrap">
+        <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span class="custom-select-label">
+            <span class="custom-select-flag"></span>
+            <span class="custom-select-text">English</span>
+          </span>
+          <inline-svg src="icons/chevron-down.svg" class="custom-select-arrow"></inline-svg>
+        </button>
+        <div class="custom-select-menu" role="listbox">
+          <div class="custom-select-option" role="option" data-value="en">
+            <span class="custom-select-flag">🇬🇧</span>
+            <span class="custom-select-text">English</span>
+          </div>
+          <div class="custom-select-option" role="option" data-value="ru">
+            <span class="custom-select-flag">🇷🇺</span>
+            <span class="custom-select-text">Русский</span>
+          </div>
+          <div class="custom-select-option" role="option" data-value="de">
+            <span class="custom-select-flag">🇩🇪</span>
+            <span class="custom-select-text">Deutsch</span>
+          </div>
+          <div class="custom-select-option" role="option" data-value="zh">
+            <span class="custom-select-flag">🇨🇳</span>
+            <span class="custom-select-text">中文</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <h1 data-i18n="title">Factorio Achievement Restorer</h1>
+      <p class="subtitle" data-i18n="subtitle1">Re-enable Steam achievements in Factorio saves</p>
+      <div class="subtitle-spacer"></div>
+      <div class="mods-warning-wrapper" id="modsWarningWrapper" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false">
+        <span class="mods-warning-text" data-i18n="subtitle2">Running the game with mods will still disable the achievements</span>
+        <span class="info-icon-badge">
+          <inline-svg src="icons/info.svg" class="info-icon"></inline-svg>
+        </span>
+        <div class="mods-tooltip" id="modsTooltip" role="tooltip">
+          <div class="mods-tooltip-content" data-i18n="modsTooltip">
+            Steam achievements remain enabled until another console command is executed or the map editor is opened. If gameplay mods are installed, Factorio disables Steam achievements at runtime directly in the game executable — this cannot be bypassed by modifying the save file and requires patching game binaries (outside the scope of this tool).
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="path-hint-container" id="pathHintContainer">
+      <div class="path-hint-header">
+        <button type="button" class="path-hint-toggle" id="pathHintToggle" aria-expanded="false">
+          <span class="path-hint-label" id="pathHintLabel">Default saves directory (Windows):</span>
+          <inline-svg src="icons/chevron-down.svg" class="path-hint-chevron"></inline-svg>
+        </button>
+        <button type="button" class="btn-copy" id="copyPathBtn" data-i18n="copyPathBtn">Copy path</button>
+      </div>
+      <div class="path-code" id="savePathText">%appdata%\Factorio\saves</div>
+      <div class="path-hint-expanded" id="pathHintExpanded">
+        <div class="path-hint-item" data-os="win">
+          <div class="path-hint-os">Windows:</div>
+          <div class="path-hint-val">%appdata%\Factorio\saves</div>
+        </div>
+        <div class="path-hint-item" data-os="mac">
+          <div class="path-hint-os">macOS:</div>
+          <div class="path-hint-val">~/Library/Application Support/factorio/saves</div>
+        </div>
+        <div class="path-hint-item" data-os="linux">
+          <div class="path-hint-os">Linux:</div>
+          <div class="path-hint-val">~/.factorio/saves</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropzone" id="dropZone">
+      <inline-svg src="icons/upload-cloud.svg" class="dropzone-icon"></inline-svg>
+      <div class="dropzone-text" data-i18n="dropTitle">Drop your save .zip file here</div>
+      <div class="dropzone-subtext" data-i18n="dropSub">or click to browse</div>
+      <input type="file" id="fileInput" accept=".zip">
+    </div>
+
+    <div class="status-card" id="statusCard">
+      <div class="status-header">
+        <div class="status-title" id="statusTitle" data-i18n="statusProcessing">Processing save file...</div>
+        <div class="progress-percent" id="progressPercent">0%</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="status-footer">
+        <div class="status-step-text" id="statusStepText">...</div>
+        <button type="button" class="btn-toggle-log" id="toggleLogBtn" aria-expanded="false">
+          <span id="toggleLogLabel" data-i18n="showLog">Show log</span>
+          <inline-svg src="icons/chevron-down.svg"></inline-svg>
+        </button>
+      </div>
+      <div class="status-log" id="statusLog"></div>
+    </div>
+
+    <div class="btn-download-container">
+      <button class="btn-download" id="downloadBtn">
+        <inline-svg src="icons/download.svg" class="download-icon"></inline-svg>
+        <span data-i18n="downloadBtn">Download save (.zip)</span>
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="./scripts/main.ts"></script>
+</body>
+</html>

@@ -113,7 +113,7 @@ body {
   background: var(--card-bg);
   border: 1.1px solid var(--card-border);
   border-radius: 17.6px;
-  padding: 35.2px 30.8px;
+  padding: 22px 30.8px 24px;
   box-shadow: 0 17.6px 44px rgba(0, 0, 0, 0.6);
   position: relative;
 }
@@ -122,7 +122,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 26.4px;
+  margin-bottom: 12px;
 }
 
 .brand {
@@ -139,7 +139,6 @@ body {
 
 .custom-select-wrap {
   position: relative;
-  display: none; /* Temporarily hidden until all locales are finalized */
 }
 
 .custom-select-trigger {
@@ -198,8 +197,9 @@ body {
   display: none;
   flex-direction: column;
   min-width: 154px;
+  max-height: 280px;
+  overflow-y: auto;
   z-index: 100;
-  overflow: hidden;
   animation: menuIn 0.12s var(--ease-snappy);
 }
 
@@ -223,7 +223,8 @@ body {
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.custom-select-option:hover {
+.custom-select-option:hover,
+.custom-select-option.focused {
   background: rgba(255, 159, 28, 0.1);
   color: #fff;
 }
@@ -232,6 +233,14 @@ body {
   background: rgba(255, 159, 28, 0.15);
   color: var(--factorio-orange);
   font-weight: 600;
+}
+
+.custom-select-option.selected.focused {
+  background: rgba(255, 159, 28, 0.22);
+}
+
+.custom-select-option.hidden {
+  display: none !important;
 }
 
 /* Header & Typography */
@@ -273,7 +282,7 @@ h1 {
   border: 1.1px solid rgba(255, 159, 28, 0.15);
   cursor: pointer;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
-  user-select: none;
+  user-select: text;
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
@@ -349,6 +358,13 @@ h1 {
   font-size: 13.2px;
   color: #cbd5e1;
   line-height: 1.6;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 8 4 4;
+  -webkit-hyphenate-limit-chars: 8 4 4;
+  user-select: text;
 }
 
 /* Hover & Active / Touch Toggle */
@@ -422,16 +438,26 @@ h1 {
 }
 
 .path-hint-expanded {
-  display: none;
-  margin-top: 11px;
-  padding-top: 11px;
-  border-top: 1.1px solid rgba(255, 255, 255, 0.05);
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s var(--ease-snappy), margin-top 0.28s var(--ease-snappy), padding-top 0.28s var(--ease-snappy), border-color 0.28s var(--ease-snappy);
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1.1px solid transparent;
+}
+
+.path-hint-expanded-inner {
+  overflow: hidden;
+  display: flex;
   flex-direction: column;
   gap: 8.8px;
 }
 
 .path-hint-expanded.open {
-  display: flex;
+  grid-template-rows: 1fr;
+  margin-top: 11px;
+  padding-top: 11px;
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 .path-hint-item {
@@ -646,9 +672,16 @@ h1 {
 }
 
 .status-log {
-  margin-top: 13.2px;
-  padding-top: 13.2px;
-  border-top: 1.1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s var(--ease-snappy), margin-top 0.28s var(--ease-snappy), padding-top 0.28s var(--ease-snappy), border-color 0.28s var(--ease-snappy);
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1.1px solid transparent;
+}
+
+.status-log-inner {
+  overflow: hidden;
   font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
   font-size: 12.7px;
   color: var(--text-muted);
@@ -656,11 +689,13 @@ h1 {
   overflow-y: auto;
   white-space: pre-wrap;
   line-height: 1.6;
-  display: none;
 }
 
 .status-log.open {
-  display: block;
+  grid-template-rows: 1fr;
+  margin-top: 13.2px;
+  padding-top: 13.2px;
+  border-top-color: rgba(255, 255, 255, 0.06);
 }
 
 .btn-download-container {

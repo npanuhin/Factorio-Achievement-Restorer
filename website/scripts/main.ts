@@ -14,6 +14,7 @@ const statusStepText = document.getElementById('statusStepText') as HTMLElement;
 const toggleLogBtn = document.getElementById('toggleLogBtn') as HTMLButtonElement;
 const toggleLogLabel = document.getElementById('toggleLogLabel') as HTMLElement;
 const statusLog = document.getElementById('statusLog') as HTMLElement;
+const statusLogInner = document.getElementById('statusLogInner') as HTMLElement;
 const downloadBtn = document.getElementById('downloadBtn') as HTMLButtonElement;
 const langWrap = document.getElementById('langSelectWrap') as HTMLElement;
 const modsWarningWrapper = document.getElementById('modsWarningWrapper') as HTMLElement;
@@ -110,6 +111,7 @@ const langSelect = new CustomSelect({
   onChange: (val: string) => {
     setLanguage(val as Language);
     langSelect.updateLabels();
+    setSavePathForOS(currentOS);
     updateToggleLogLabel();
   }
 });
@@ -158,12 +160,14 @@ fileInput.addEventListener('change', (e) => {
 });
 
 function log(msg: string): void {
-  statusLog.textContent += msg + '\n';
-  statusLog.scrollTop = statusLog.scrollHeight;
+  const target = statusLogInner || statusLog;
+  target.textContent += msg + '\n';
+  target.scrollTop = target.scrollHeight;
 }
 
 function clearLog(): void {
-  statusLog.textContent = '';
+  const target = statusLogInner || statusLog;
+  target.textContent = '';
 }
 
 // 60/120 FPS continuous interpolation engine in UI thread
